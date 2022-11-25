@@ -33,24 +33,23 @@ function updateContactCount( array ) {
 
 // function to delete contact cards and rebuild remaining cards
 function deleteContact(obj, array) {
+    
     if(Array.isArray(array) && array.length > 0) {        
         // remove selected card for delete
         let objIndex = array.indexOf(obj);  
         array.splice(objIndex, 1);
-        const newArr = [...array];
         
         // clear grid
         gridBox.innerHTML = '';
 
         // refill grid with remaining objects
-        newArr.forEach(element => listContacts(element, newArr));
-
-        updateContactCount(newArr);
+        array.forEach(element => listContacts(element, array));
+        updateContactCount(array);
     }
 }  
 
 // function to build contact cards
-function listContacts(obj, objArr) {
+function listContacts(obj) {
 
     var div = document.createElement('div');
 
@@ -60,11 +59,11 @@ function listContacts(obj, objArr) {
         <p>City: ${obj.city}</p>
         <p>Email: ${obj.email}</p>
     `;
-    gridBox.appendChild(div);
+    gridBox.prepend(div);
 
     // add on click event for card once created
     onEvent('click', div, () => {
-        deleteContact(obj, objArr);
+        deleteContact(obj, contactArray);
     });
 }
 
@@ -84,7 +83,7 @@ function submitForm(name, city, email) {
             contactArray.push(contact);
             
             updateContactCount(contactArray);
-            listContacts(contact, contactArray);            
+            listContacts(contact);            
         
         } else {
             message.innerHTML = `<p class="warn">Contact List is Full!</p>`;
