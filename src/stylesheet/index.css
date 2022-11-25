@@ -52,6 +52,7 @@ p {
 
 .my-contacts {
     height: 100vh;
+    width: 100%;
 }
 
 .main-container {
@@ -65,10 +66,8 @@ p {
     display: grid;
     height: 100%;
     width: 100%;
-    margin-bottom: 20px;
-    grid-template-columns: repeat(3, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1rem;
-    padding: 20px;
 }
 
 .grid > div.card {
@@ -83,7 +82,7 @@ p {
 }
 
 .grid > div.card:hover {
-    border: 1px solid var(--app-red);
+    border: 1px solid rgba(255, 60, 87, 0.349);
 }
 
 .my-contacts h1 {
@@ -114,7 +113,7 @@ p {
 }
 
 .form input:focus {
-    border: 1px solid rgba(255, 255, 255, .25);
+    border: 1px solid rgba(113, 110, 110, 0.25);
 }
 
 .form button {
@@ -158,6 +157,9 @@ p {
 
 .message {
     height: 40px;
+    display: grid;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .message p {
@@ -166,14 +168,16 @@ p {
     animation: disappear 5s ease-in-out;
 }
 
-
-
 .message p.invalid {
     color: var(--app-red);
 }
 
 .message p.valid {
     color: var(--app-green);
+}
+
+.message p.warn {
+    color: var(--app-yellow);
 }
 
 /**************************************************/

@@ -19,23 +19,21 @@ const message = select('.message');
 const contactArray = [];
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const max = 12;
 /**-------------------------------------------------------------------------- */
 
 /**------------------------- Functions and Events---------------------------- */
 
 // function to update Contact count
 function updateContactCount( array ) {
-    if(Array.isArray(array) && array.length > 0) {
-        savedContacts.innerText = `${array.length}`;
+    if(Array.isArray(array)) {
+        savedContacts.innerText = `${array.length} / ${max}`;
     }
 }  
 
 // function to delete contact cards and rebuild remaining cards
 function deleteContact(obj, array) {
-    if(Array.isArray(array) && array.length > 0) {
-        // save copy of original array
-        const originalArr = [...array];
-        
+    if(Array.isArray(array) && array.length > 0) {        
         // remove selected card for delete
         let objIndex = array.indexOf(obj);  
         array.splice(objIndex, 1);
@@ -44,25 +42,23 @@ function deleteContact(obj, array) {
         // clear grid
         gridBox.innerHTML = '';
 
-        // rebuild remaining cards
-        newArr.forEach(element => {
-            buildContactCard(element, newArr);
-        });
+        // refill grid with remaining objects
+        newArr.forEach(element => listContacts(element, newArr));
 
         updateContactCount(newArr);
     }
 }  
 
 // function to build contact cards
-function buildContactCard(obj, objArr) {
+function listContacts(obj, objArr) {
 
     var div = document.createElement('div');
 
     div.classList.add('card');
-    div.innerText = `
-        Full Name: ${obj.fullName}
-        City: ${obj.city}
-        Email: ${obj.email}
+    div.innerHTML = `
+        <p>Name: ${obj.name}</p>
+        <p>City: ${obj.city}</p>
+        <p>Email: ${obj.email}</p>
     `;
     gridBox.appendChild(div);
 
@@ -73,25 +69,25 @@ function buildContactCard(obj, objArr) {
 }
 
 // submit form
-function submitForm(fullName, city, email) {
+function submitForm(name, city, email) {
+
     try {
 
         message.innerHTML = `<p class="valid">New Contact Created</p>`;
         contactInput.value = '';
 
-        if(contactArray.length < 9) {
+        if(contactArray.length < max) {
             // build contact object array
-            const contact = new Contact();
-            contact.fullName = fullName;
-            contact.city = city;
-            contact.email = email;
+            name = name[0].toUpperCase() + name.slice(1);
+            city = city[0].toUpperCase() + city.slice(1);
+            const contact = new Contact(name, city, email);
             contactArray.push(contact);
             
             updateContactCount(contactArray);
-            buildContactCard(contact, contactArray);            
+            listContacts(contact, contactArray);            
         
         } else {
-            message.innerHTML = `<p>Phone Book is Full!</p>`;
+            message.innerHTML = `<p class="warn">Contact List is Full!</p>`;
         }
 
     } catch (error) {
@@ -101,6 +97,7 @@ function submitForm(fullName, city, email) {
 
 // function to validate form input
 function validateFormInput () {
+
     if(contactInput.value !== '') {
         const contactValues = contactInput.value.split(', ');
         let info = '';
@@ -115,7 +112,7 @@ function validateFormInput () {
 
         } else {
 
-            info += 'Full Name, City and Email are required';
+            info += 'Name, City and Email are required';
             valid = false;
 
         }
@@ -142,6 +139,7 @@ onEvent('click', add, function (event) {
 onEvent('load', window, () => {
     gridBox.innerHTML = '';
     form.reset();
+    savedContacts.innerText = `${contactArray.length} / ${max}`;
 });
 
 /**-------------------------------------------------------------------------- */
