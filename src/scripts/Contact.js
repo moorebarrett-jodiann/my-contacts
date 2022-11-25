@@ -7,6 +7,11 @@
  * */
 
 class Contact {
+
+    #fullName;
+    #city;
+    #email;
+
     constructor (fullName, city, email) {
         this.#fullName = fullName;
         this.#city = city;
@@ -17,7 +22,7 @@ class Contact {
         if(fullName.length > 0) {
             this.#fullName = fullName;
         } else {
-            throw new TypeError('fullName is not valid');
+            throw new TypeError('Full Name is not valid');
         }
     }
 

@@ -162,3 +162,19 @@ p {
     align-items: center;
     justify-content: center;
 }
+
+.message {
+    height: 40px;
+}
+
+.message p {
+    font-size: 14px;
+}
+
+.message p.invalid {
+    color: var(--app-red);
+}
+
+.message p.valid {
+    color: var(--app-green);
+}
