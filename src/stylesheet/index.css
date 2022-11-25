@@ -52,7 +52,6 @@ p {
 
 .my-contacts {
     height: 100vh;
-    width: 800px;
 }
 
 .main-container {
@@ -64,17 +63,27 @@ p {
 
 .grid {
     display: grid;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
     height: 100%;
     width: 100%;
     margin-bottom: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    /* grid-template-rows: repeat(4, minmax(100px, 100px));  */
+    grid-template-columns: repeat(3, minmax(300px, 1fr));
     gap: 1rem;
     padding: 20px;
-    /* transform: rotateX(180deg); */
+}
+
+.grid > div.card {
+    text-align: left;
+    color: var(--app-white);
+    border: 1px solid rgba(58, 58, 58, 0.3);
+    background-color: #222739;
+    border-radius: 5px;
+    animation: appear 0.3s ease-in;
+    transition: border 0.25s ease-in-out;
+    padding: 10px 15px;
+}
+
+.grid > div.card:hover {
+    border: 1px solid var(--app-red);
 }
 
 .my-contacts h1 {
@@ -85,11 +94,11 @@ p {
 
 .form {
     margin-bottom: 20px;
-    width: 50%;
+    width: 80%;
 }
 
 .form input {
-    width: 70%;
+    width: 100%;
     height: 45px;
     padding: 0 15px;
     border: var(--app-dark-bg);
@@ -109,7 +118,7 @@ p {
 }
 
 .form button {
-    width: 30%;
+    width: 100px;
     height: 45px;
     text-align: center;
     border-radius: 5px;
@@ -117,30 +126,14 @@ p {
     font-size: 17px;
     font-weight: 600;
     letter-spacing: 0.2px;
-    transition: all 0.25s ease-in-out;
+    transition: background-color 0.25s ease-in-out;
     background-color: var(--app-green);
     color: #fff;
     padding: 0 10px;
 }
 
 .form button:hover {
-    background-color: var(--app-orange-hover);
-}
-
-.grid > div.card {
-    text-align: left;
-    animation: appear 0.3s ease-in;
-}
-
-@keyframes appear {
-    from {
-        opacity: 0;
-        transform: translate(0px, 10px);
-    }
-    to {
-        opacity: 1;
-        transform: translate(0);
-    }
+    background-color: var(--app-green-hover);
 }
 
 .saved-contacts {
@@ -168,8 +161,12 @@ p {
 }
 
 .message p {
+    opacity: 0;
     font-size: 14px;
+    animation: disappear 5s ease-in-out;
 }
+
+
 
 .message p.invalid {
     color: var(--app-red);
@@ -177,4 +174,28 @@ p {
 
 .message p.valid {
     color: var(--app-green);
+}
+
+/**************************************************/
+/*****       Animations                      ******/
+/**************************************************/
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translate(0px, 10px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+@keyframes disappear {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }

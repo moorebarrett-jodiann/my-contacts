@@ -46,16 +46,12 @@ class Contact {
         if(email.length > 0) {
             this.#email = email;
         } else {
-            throw new TypeError('Email is not valid');
+            throw 'Email is not valid';
         }
     }
 
     get email() {
         return this.#email;
-    }
-    
-    getInfo() {
-        return `Full Name: ${this.fullName} <br/>City: ${this.city} <br/>Email: ${this.email} `;
     }
 }
 
