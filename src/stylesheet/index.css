@@ -71,18 +71,30 @@ p {
 }
 
 .grid > div.card {
+    position: relative;
     text-align: left;
     color: var(--app-white);
     border: 1px solid rgba(58, 58, 58, 0.3);
     background-color: #222739;
     border-radius: 5px;
-    animation: appear 0.25s ease-in;
+    animation: appear 0.4s ease-in;
     transition: border 0.25s ease-in-out;
     padding: 10px 15px;
 }
 
 .grid > div.card:hover {
     border: 1px solid rgba(255, 60, 87, 0.349);
+}
+
+.grid > div.card:hover:after {
+    display: inline-block;
+    font-family: FontAwesome;
+    content: "\f00d";
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    color: var(--app-red);
+    font-size: 20px;
 }
 
 .my-contacts h1 {
