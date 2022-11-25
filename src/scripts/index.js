@@ -71,19 +71,24 @@ function listContacts(obj) {
 function submitForm(name, city, email) {
 
     try {
-
         message.innerHTML = `<p class="valid">New Contact Created</p>`;
         contactInput.value = '';
 
         if(contactArray.length < max) {
             // build contact object array
+            name = name.trim();
+            city = city.trim();
             name = name[0].toUpperCase() + name.slice(1);
             city = city[0].toUpperCase() + city.slice(1);
             const contact = new Contact(name, city, email);
             contactArray.push(contact);
             
+            // clear grid
+            gridBox.innerHTML = '';
+
+            // fill grid with objects
+            contactArray.forEach(element => listContacts(element, contactArray));
             updateContactCount(contactArray);
-            listContacts(contact);            
         
         } else {
             message.innerHTML = `<p class="warn">Contact List is Full!</p>`;
@@ -98,22 +103,38 @@ function submitForm(name, city, email) {
 function validateFormInput () {
 
     if(contactInput.value !== '') {
-        const contactValues = contactInput.value.split(', ');
+
+        const contactValues = contactInput.value.trim().split(',');
+        
         let info = '';
         let valid = true;
     
         if(contactValues.length === 3) {
+            
+            // validate name
+            if(contactValues[0].trim().length === 0) {
+                info += 'Name is required<br/>';
+                valid = false;
+            }
+            
+            // validate city
+            if(contactValues[1].trim().length === 0) {
+                info += 'City is required<br/>';
+                valid = false;
+            }
+
             // validate email
-            if(!emailRegex.test(contactValues[2])) {
-                info += 'A valid Email is required';
+            if(contactValues[2].trim().length === 0) {
+                info += 'Email is required<br/>';
+                valid = false;
+            } else if(!emailRegex.test(contactValues[2].trim())) {
+                info += 'A valid Email is required<br/>';
                 valid = false;
             }
 
         } else {
-
             info += 'Name, City and Email are required';
             valid = false;
-
         }
         
         if (!valid) {
