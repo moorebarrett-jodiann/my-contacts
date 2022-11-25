@@ -1,0 +1,167 @@
+@import "./reset.css";
+
+:root {
+    --app-dark-bg:#1a1d28;
+    --app-red:#ff3c57;
+    --app-yellow:#ffd13c;
+    --app-green:#33ab4e;
+    --app-green-hover:#158f32;
+    --app-purple:#833cff;
+    --app-orange:#ff833c;
+    --app-pink:#f85fdc;
+    --app-orange-hover:#fe7a2d;
+    --app-blue:#3c57ff;
+    --app-blue-hover:#364ee6;
+    --app-white:rgb(244, 246, 248);
+
+    --app-btn-height: 46px;
+    --app-btn-width: 100%;
+}
+    
+body {
+    background-color: var(--app-dark-bg);
+}
+
+.container {
+    width: min(100% - 30px, 1080px);
+    margin-inline: auto;
+    display: grid;
+    place-items: center;
+}
+
+/**************************************************/
+/*****       Main                            ******/
+/**************************************************/
+h1, h2, h3, a, p {
+    color: rgb(244, 246, 248);
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-size: 25px;
+}
+
+p {
+    font-size: 17px;
+}
+
+.flexbox {
+    display: flex;
+}
+
+.my-contacts {
+    height: 100vh;
+    width: 80%;
+}
+
+.main-container {
+    padding: 20px;
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    /* position: relative;
+    top: 50%;
+    transform: translateY(-50%); */
+}
+
+.grid {
+    display: grid;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+    margin-bottom: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    /* grid-template-rows: repeat(4, minmax(100px, 100px));  */
+    gap: 1rem;
+    padding: 20px;
+    /* transform: rotateX(180deg); */
+}
+
+.my-contacts h1 {
+    font-size: 23px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.form {
+    margin-bottom: 20px;
+    width: 50%;
+}
+
+.form input {
+    width: 70%;
+    height: 45px;
+    padding: 0 15px;
+    border: var(--app-dark-bg);
+    background-color: #222739;
+    border-radius: 5px;
+    border: 1px solid rgba(58, 58, 58, 0.3);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 26px 30px -10px, rgba(0, 0, 0, 0.1) 0px 16px 10px -10px;
+    font-size: 17px;
+    font-weight: 400;
+    text-align: left;
+    color: var(--app-white);
+    margin-right: 10px;
+}
+
+.form input:focus {
+    border: 1px solid rgba(255, 255, 255, .25);
+}
+
+.form button {
+    width: 30%;
+    height: 45px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 26px 30px -10px, rgba(0, 0, 0, 0.1) 0px 16px 10px -10px;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    transition: all 0.25s ease-in-out;
+    background-color: var(--app-green);
+    color: #fff;
+    padding: 0 10px;
+}
+
+.form button:hover {
+    background-color: var(--app-orange-hover);
+}
+
+.grid > div.card {
+    text-align: left;
+    animation: appear 0.3s ease-in;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translate(0px, 10px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+.saved-contacts {
+    position: fixed;
+    right: 20px;
+    bottom: 40px;
+    width: 30%;
+    height: 45px;
+    padding: 0 15px;
+    border: var(--app-dark-bg);
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.3);
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--app-white);
+    margin-right: 10px;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
