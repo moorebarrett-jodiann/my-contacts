@@ -26,57 +26,80 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // function to update Contact count
 function updateContactCount( array ) {
     if(Array.isArray(array) && array.length > 0) {
-        console.log(array);
-        console.log(array.length);
-        console.log(savedContacts);
         savedContacts.innerText = `${array.length}`;
     }
 }  
 
-// function to delete contact from gridbox
+// function to delete contact cards and rebuild remaining cards
 function deleteContact(obj, array) {
     if(Array.isArray(array) && array.length > 0) {
         // save copy of original array
         const originalArr = [...array];
         
+        // remove selected card for delete
+        let objIndex = array.indexOf(obj);  
+        array.splice(objIndex, 1);
+        const newArr = [...array];
+        
+        // clear grid
+        gridBox.innerHTML = '';
+
+        // rebuild remaining cards
+        newArr.forEach(element => {
+            buildContactCard(element, newArr);
+        });
+
+        updateContactCount(newArr);
     }
 }  
 
+// function to build contact cards
+function buildContactCard(obj, objArr) {
+
+    var div = document.createElement('div');
+
+    div.classList.add('card');
+    div.innerText = `
+        Full Name: ${obj.fullName}
+        City: ${obj.city}
+        Email: ${obj.email}
+    `;
+    gridBox.appendChild(div);
+
+    // add on click event for card once created
+    onEvent('click', div, () => {
+        deleteContact(obj, objArr);
+    });
+}
+
+// submit form
 function submitForm(fullName, city, email) {
     try {
+
         message.innerHTML = `<p class="valid">New Contact Created</p>`;
+        contactInput.value = '';
+
         if(contactArray.length < 9) {
+            // build contact object array
             const contact = new Contact();
             contact.fullName = fullName;
             contact.city = city;
             contact.email = email;
             contactArray.push(contact);
-            console.log(contact);
-            console.log(contactArray);
-            updateContactCount(contactArray);
             
-            var obj = document.createElement('div');
-            obj.classList.add('card');
-            obj.innerText = `
-                Full Name: ${contact.fullName}<br/>
-                City: ${contact.city}<br/>
-                Email: ${contact.email}
-            `;
-            gridBox.appendChild(obj);
-            // onEvent('click', obj, () => {
-            //     deleteContact(contact, contactArray);
-            // });
+            updateContactCount(contactArray);
+            buildContactCard(contact, contactArray);            
         
         } else {
             message.innerHTML = `<p>Phone Book is Full!</p>`;
         }
 
     } catch (error) {
-        console.log(error);
         message.innerHTML = `<p class="invalid">${error}</p>`;
     }
 }
 
+// function to validate form input
 function validateFormInput () {
     if(contactInput.value !== '') {
         const contactValues = contactInput.value.split(', ');
@@ -84,19 +107,23 @@ function validateFormInput () {
         let valid = true;
     
         if(contactValues.length === 3) {
+            // validate email
             if(!emailRegex.test(contactValues[2])) {
-                info += 'A valid Email is required<br/>';
+                info += 'A valid Email is required';
                 valid = false;
             }
+
         } else {
-            info += 'Full Name, City and Email are required<br/>';
+
+            info += 'Full Name, City and Email are required';
             valid = false;
+
         }
         
         if (!valid) {
             message.innerHTML = `<p class="invalid">${info}</p>`;
-            contactInput.value = '';
         } else {
+            // spread contact values in array
             submitForm(...contactValues);
         }
 
@@ -115,5 +142,6 @@ onEvent('click', add, function (event) {
 onEvent('load', window, () => {
     gridBox.innerHTML = '';
     form.reset();
-  });
+});
+
 /**-------------------------------------------------------------------------- */
